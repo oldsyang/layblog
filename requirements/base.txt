@@ -1,0 +1,8 @@
+django==2.2.10
+ipython
+djangorestframework==3.9.4
+arrow==0.13.2
+jsonfield==2.0.2
+django-ipware==2.1.0
+django-model-utils==3.1.2
+Pillow==6.1.0
