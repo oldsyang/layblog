@@ -4,6 +4,7 @@ import logging
 from django.db import models
 from django.db.models import F
 from django.utils import timezone
+from mdeditor.fields import MDTextField
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 
@@ -84,7 +85,7 @@ class Article(TimeStampedModel):
 
 class ArticleDetail(TimeStampedModel):
     """文章内容表"""
-    content = models.TextField(verbose_name="文章内容")
+    content = MDTextField(verbose_name="文章内容")
     article = models.OneToOneField(verbose_name="所属文章", to="Article", on_delete=models.CASCADE)
 
     class Meta:

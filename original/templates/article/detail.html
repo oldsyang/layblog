@@ -1,5 +1,4 @@
 {% extends "baseTemplate.html" %}
-{% load trans_md %}
 {% load staticfiles %}
 {% block style %}
     <link rel="stylesheet" href="{% static '/editor.md-master/css/editormd.css' %}"/>
@@ -39,7 +38,7 @@
         }
 
         body .layui-layer-dir .layui-layer-content {
-            {#padding: 10px;#}
+        {#padding: 10px;#}
         }
 
         .site-dir a em {
@@ -70,7 +69,7 @@
     <div id="custom-toc-container" style="z-index: 19891015; padding-left: 0">
 
     </div>
-    <div class="main mood message  mood-details article1" id="article-detail-html">
+    <div class="main mood message  mood-details article1 layui-anim layui-anim-upbit" id="article-detail-html">
         <div class="top_title">博文 &#62 {{ article.title }}</div>
         <div class="item1">
             <div class="item-content">
@@ -119,48 +118,56 @@
     </script>
 
     <script>
-        $(function () {
-            $("#custom-toc-container ul").addClass("site-dir layui-layer-wrap");
-            $("#custom-toc-container ul").css('display', 'block');
-            $(".sidebar>ul").addClass("nav").addClass("nav-sidebar");
-            $("img").addClass("img-responsive");
-        });
+
     </script>
     <script>
+
+        function add_site_dir_style() {
+            $("#custom-toc-container ul").addClass("site-dir layui-layer-wrap");
+            $("#custom-toc-container ul").css('display', 'block');
+        }
+
+        add_site_dir_style();
+
         layui.config({
             base: "{% static 'static/js/' %}"
         }).use(['layBlog', 'layer'], function () {
             var $ = layui.jquery;
             var layer = layui.layer;
-            var siteDir = $('#custom-toc-container');
-            if (siteDir && $(window).width() > 750) {
-                layer.ready(function () {
-                    layer.open({
-                        type: 1
-                        , content: siteDir
-                        , skin: 'layui-layer-dir'
-                        , area: 'auto'
-                        , maxHeight: $(window).height() - 300
-                        , offset: 'r'
-                        , shade: false
-                        , title: '目录'
-                        , success: function (layero, index) {
-                            layer.style(index, {
-                                marginLeft: -15
-                            });
-                        }
+
+            function show_toc() {
+                var siteDir = $('#custom-toc-container');
+                if (siteDir && $(window).width() > 750) {
+                    layer.ready(function () {
+                        layer.open({
+                            type: 1
+                            , content: siteDir
+                            , skin: 'layui-layer-dir'
+                            , area: 'auto'
+                            , maxHeight: $(window).height() - 300
+                            , offset: 'r'
+                            , shade: false
+                            , title: '目录'
+                            , success: function (layero, index) {
+                                layer.style(index, {
+                                    marginLeft: -15
+                                });
+                            }
+                        });
                     });
-                });
-                siteDir.find('li').on('click', function () {
-                    var othis = $(this);
-                    othis.find('a').addClass('layui-this');
-                    othis.siblings().find('a').removeClass('layui-this');
-                });
-            } else {
-                $('#toc-layer-template').empty();
+                    siteDir.find('li').on('click', function () {
+                        var othis = $(this);
+                        othis.find('a').addClass('layui-this');
+                        othis.siblings().find('a').removeClass('layui-this');
+                    });
+                } else {
+                    $('#toc-layer-template').empty();
+                }
             }
 
+            show_toc();
         });
+
 
     </script>
 

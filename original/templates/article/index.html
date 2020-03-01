@@ -1,9 +1,9 @@
 {% extends "baseTemplate.html" %}
-{% load random_tag_color %}
+{% load custom_tag %}
 {% load staticfiles %}
 {% block content %}
     <!-- 右侧内容区域 -->
-    <div class="article-right-content">
+    <div class="article-right-content layui-anim layui-anim-upbit">
         <h3>推荐文章</h3>
         <ul>
             {% for id, title in tag_list.items %}
@@ -16,7 +16,7 @@
 
 
     <!-- 主要内容 -->
-    <div class="main article">
+    <div class="main article layui-anim layui-anim-upbit">
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
                 <li class="layui-this" data-id="0" id="tab-article-0">全部</li>
@@ -139,7 +139,7 @@
 
     </script>
     <script id="SITE-article-list-tpl" type="text/html">
-        <div class="item">
+        <div class="item layui-anim layui-anim-scaleSpring">
             <img src="<% d.cover %>" alt="" style="max-width: 100%;height: auto;max-height: 170px;">
             <div class="item-content">
                 <h3><% d.title %></h3>

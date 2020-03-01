@@ -26,6 +26,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += [
         re_path(r'admin/', admin.site.urls),
+        re_path(r'mdeditor/', include('mdeditor.urls')),
         re_path(r'^media/(?P<path>.*)$', static.serve, {"document_root": settings.MEDIA_ROOT}, name='media'),
     ]
 

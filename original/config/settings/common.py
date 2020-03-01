@@ -47,6 +47,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = (
     'rest_framework',
+    'mdeditor',
 )
 
 PROJECT_APPS = (
