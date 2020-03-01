@@ -79,6 +79,11 @@ color: #d1aa56;
 #demo1 .layui-laypage .layui-laypage-curr .layui-laypage-em{background-color: #a58f59;}
 
 
+#article-list-page-continer{text-align: center;}
+#article-list-page-continer a,#article-list-page-continer span{background:rgba(255,255,255,0.2); background:#000; filter:Alpha(opacity=200);  margin-right: 10px; color: #fff; border:1px solid #535655;}
+#article-list-page-continer .layui-laypage .layui-laypage-curr .layui-laypage-em{background-color: #a58f59;}
+
+
 
 
 /*文章*/
@@ -92,7 +97,7 @@ color: #d1aa56;
 .main  .layui-tab-brief>.layui-tab-title .layui-this{color: #cca455;}
 .main  .layui-tab-brief>.layui-tab-title .layui-this:after{border-color: #d1aa55;}
 .article .item-content h3{font-size: 20px;}
-.Subtitle{display:inline-block; width: 50px; height: 20px; text-align: center; line-height: 20px; background:#a58c56; margin:10px 0; cursor: pointer;}
+.Subtitle{display:inline-block; height: 20px; text-align: center; line-height: 20px; background:#a58c56; margin:10px 0; cursor: pointer;}
 .article .item-content p{line-height: 28px; margin-bottom: 16px; display: -webkit-box; display: -moz-box;  white-space: pre-wrap; word-wrap: break-word;overflow: hidden; text-overflow: ellipsis; -webkit-box-orient: vertical; -webkit-line-clamp:2;   /*显示行数*/}
 .article .item-content button{width: 102px;height: 32px; line-height: 32px; border:1px solid #706553; background-color: transparent; color: #b79b52;}
 .article-right-content{width: 13.5%; position: absolute; right: 109px; top: 242px; box-sizing: border-box; padding:25px;background: #141412; background: rgba(255,255,255,0.2); filter:Alpha(opacity=200);}

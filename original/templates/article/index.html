@@ -1,0 +1,140 @@
+{% extends "baseTemplate.html" %}
+{% load random_tag_color %}
+{% load staticfiles %}
+{% block content %}
+    <!-- 右侧内容区域 -->
+    <div class="article-right-content">
+        <h3>推荐文章</h3>
+        <ul>
+            {% for id, title in tag_list.items %}
+                <li>
+                    <button class="layui-btn {% random_color %}">{{ title }}</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+    <!-- 主要内容 -->
+    <div class="main article">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this" data-id="0" id="tab-article-0">全部</li>
+                {% for id, title in category_list.items %}
+                    <li data-id="{{ id }}">{{ title }}</li>
+                {% endfor %}
+            </ul>
+            <div class="layui-tab-content"></div>
+        </div>
+        <div id="article-list-continer">
+        </div>
+        <div id="article-list-page-continer"></div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        layui.config({
+            base: "{% static 'static/js/' %}"
+        }).use(['layBlog', 'element', 'laytpl', 'util', 'laypage'], function () {
+            var $ = layui.jquery;
+            var element = layui.element, laytpl = layui.laytpl, laypage = layui.laypage;
+            laytpl.config({
+                open: '<%',
+                close: '%>'
+            });
+            var current_category = 0;
+            var page_first = true;
+
+            laytpl.my_day = function (data, _type = 0) {
+                if (data == null) {  //空值判断
+                    return "";
+                }
+                var year = data.substring(0, 4);
+                var month = data.substring(5, 7);
+                var day = data.substring(8, 10);
+                if (_type == 1) {
+                    return year + "-" + month
+                }
+                return day;
+            };
+
+            function get_article_list(pageConf) {
+                if (!pageConf) {
+                    pageConf = {};
+                    pageConf.page = 1;
+                    pageConf.limit = 10;
+                }
+                $.ajax({
+                    url: "{% url 'article:api.v0:article.list' %}",
+                    type: "get",
+                    dataType: 'json',
+                    data: {'category': current_category, 'page': pageConf.page, 'limit': pageConf.limit},
+                    success: function (args) {
+                        var data = args['data'], view = $('#SITE-article-list-tpl').html();
+                        $('#article-list-continer').empty();
+                        $.each(data, function (i, val) {
+                            //模板渲染
+                            laytpl(view).render(val, function (html) {
+                                $('#article-list-continer').prepend(html);
+                            });
+                        });
+                        if (page_first) {
+                            laypage.render({
+                                elem: 'article-list-page-continer'
+                                , layout: ['prev', 'page', 'next', 'limit']
+                                , count: args['meta']['total'] //数据总数
+                                , page: pageConf.page
+                                , limit: pageConf.limit
+                                , first: "首页"
+                                , last: "尾页"
+                                , jump: function (obj, first) {
+                                    if (!first) {
+                                        page_first = false;
+                                        pageConf.page = obj.curr;
+                                        pageConf.limit = obj.limit;
+                                        get_article_list(pageConf);
+                                    }
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        layer.msg(JSON.parse((XMLHttpRequest.responseText)).message);
+                    }
+                })
+            }
+
+            element.on('tab(docDemoTabBrief)', function () {
+                current_category = this.getAttribute('data-id');
+                page_first = true;
+                get_article_list();
+            });
+
+
+            $('#tab-article-0').trigger("click");
+
+        });
+
+    </script>
+    <script id="SITE-article-list-tpl" type="text/html">
+        <div class="item">
+            <img src="<% d.cover %>" alt="" style="max-width: 100%;height: auto;max-height: 170px;">
+            <div class="item-content">
+                <h3><% d.title %></h3>
+                <span class="Subtitle"><% d.category %></span><br/>
+                <p><% d.summary %></p>
+                <a target="_self" href="/articles/<% d.acode %>/">
+                    <button class="layui-btn">阅读全文</button>
+                </a>
+            </div>
+            <div class="date-box">
+                <div class="date">
+                    <h4><% layui.laytpl.my_day(d.publish_date) %></h4>
+                    <span><% layui.laytpl.my_day(d.publish_date, 1) %></span>
+                </div>
+            </div>
+        </div>
+    </script>
+{% endblock %}

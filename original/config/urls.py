@@ -1,4 +1,4 @@
-"""zeus URL Configuration
+"""Blog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
@@ -13,8 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.shortcuts import render
-from django.urls import re_path
+from django.conf import settings
+from django.conf.urls import static
+from django.contrib import admin
+from django.urls import include, re_path
 
 urlpatterns = [
+    re_path('', include('articles.urls', namespace='article')),
+    re_path('', include('misc.urls', namespace='misc')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        re_path(r'admin/', admin.site.urls),
+        re_path(r'^media/(?P<path>.*)$', static.serve, {"document_root": settings.MEDIA_ROOT}, name='media'),
+    ]
+
+handler404 = 'articles.page_views.page_not_found'

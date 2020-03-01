@@ -36,7 +36,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +44,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+THIRD_PARTY_APPS = (
+    'rest_framework',
+)
+
+PROJECT_APPS = (
+    'account',
+    'articles',
+)
+
+INSTALLED_APPS = []
+INSTALLED_APPS += DJANGO_APPS
+INSTALLED_APPS += THIRD_PARTY_APPS
+INSTALLED_APPS += PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,6 +132,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = root('media')
+
 STATICFILES_DIRS = [
     root('static'),
 ]
@@ -159,3 +177,20 @@ LOGGING = {
 SITE_WHITE_LIST = [
     '^/admin/'
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'common.rest.CsrfExemptSessionAuthentication',
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'EXCEPTION_HANDLER': 'common.rest.exception_handler',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20,
+}
+
+SITE_INFO = {
+    'site_title': 'Oldsyang',
+    'site_avatar': ''.join([STATIC_URL, 'static/img/avatar.jpg'])
+}

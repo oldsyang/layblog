@@ -1,0 +1,167 @@
+{% extends "baseTemplate.html" %}
+{% load trans_md %}
+{% load staticfiles %}
+{% block style %}
+    <link rel="stylesheet" href="{% static '/editor.md-master/css/editormd.css' %}"/>
+    <link rel="stylesheet" href="{% static '/editor.md-master/css/editormd.preview.css' %}"/>
+    <style>
+
+        /* 鐩綍 */
+        .site-dir {
+            display: none;
+        }
+
+        #custom-toc-container {
+            display: none;
+        }
+
+        .site-dir li {
+            line-height: 26px;
+            margin-left: 20px;
+            overflow: visible;
+            list-style-type: disc;
+        }
+
+        .site-dir li a {
+            display: block;
+        }
+
+        .site-dir li a:active {
+            color: #01AAED;
+        }
+
+        .site-dir li a.layui-this {
+            color: #01AAED;
+        }
+
+        body .layui-layer-dir {
+            border: 1px solid #d2d2d2;
+        }
+
+        body .layui-layer-dir .layui-layer-content {
+            {#padding: 10px;#}
+        }
+
+        .site-dir a em {
+            padding-left: 5px;
+            font-size: 12px;
+            color: #c2c2c2;
+            font-style: normal;
+        }
+
+
+        #custom-toc-container {
+            border: 1px solid #ddd;
+            width: 90%;
+            margin: 0 auto 15px;
+            overflow: visible;
+        }
+
+        #custom-toc-container > .markdown-toc {
+            padding: 10px;
+        }
+
+    </style>
+
+    //依赖jquery
+
+{% endblock %}
+{% block content %}
+    <div id="custom-toc-container" style="z-index: 19891015; padding-left: 0">
+
+    </div>
+    <div class="main mood message  mood-details article1" id="article-detail-html">
+        <div class="top_title">博文 &#62 {{ article.title }}</div>
+        <div class="item1">
+            <div class="item-content">
+                <h3>{{ article.title }}</h3>
+
+                <pre class="label"><span class="Subtitle">{{ article.category.title }}</span><span class="tb"><i
+                        class="layui-icon layui-icon-radio"></i>1000</span><span>{{ article.publish_date|date:"Y/m/d" }}</span>
+                </pre>
+
+                <div id="test-editormd">
+                    <textarea style="display:none;">{{ content }}</textarea>
+                </div>
+                <div class="btn-box">
+                    <button type="button" class="layui-btn">上一篇</button>
+                    <button type="button" class="layui-btn">下一篇</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{% static '/editor.md-master/lib/marked.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/lib/prettify.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/lib/raphael.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/lib/underscore.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static '/editor.md-master/editormd.js' %}"></script>
+
+    <script>
+        testEditor = editormd.markdownToHTML("test-editormd", {
+            htmlDecode: "style,script,iframe",  // you can filter tags decode
+            emoji: true,
+            taskList: true,
+            toc: true,
+            tocm: true,
+            tex: true,  // 默认不解析
+            flowChart: true,  // 默认不解析
+            sequenceDiagram: true,  // 默认不解析
+            tocContainer: "#custom-toc-container",
+            tocDropdown: true,
+            tocTitle: "目录 Table of Contents dsfsadfsfdsdf",
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $("#custom-toc-container ul").addClass("site-dir layui-layer-wrap");
+            $("#custom-toc-container ul").css('display', 'block');
+            $(".sidebar>ul").addClass("nav").addClass("nav-sidebar");
+            $("img").addClass("img-responsive");
+        });
+    </script>
+    <script>
+        layui.config({
+            base: "{% static 'static/js/' %}"
+        }).use(['layBlog', 'layer'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var siteDir = $('#custom-toc-container');
+            if (siteDir && $(window).width() > 750) {
+                layer.ready(function () {
+                    layer.open({
+                        type: 1
+                        , content: siteDir
+                        , skin: 'layui-layer-dir'
+                        , area: 'auto'
+                        , maxHeight: $(window).height() - 300
+                        , offset: 'r'
+                        , shade: false
+                        , title: '目录'
+                        , success: function (layero, index) {
+                            layer.style(index, {
+                                marginLeft: -15
+                            });
+                        }
+                    });
+                });
+                siteDir.find('li').on('click', function () {
+                    var othis = $(this);
+                    othis.find('a').addClass('layui-this');
+                    othis.siblings().find('a').removeClass('layui-this');
+                });
+            } else {
+                $('#toc-layer-template').empty();
+            }
+
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,13 +1,4 @@
-﻿/**
- 
- @Name: layuiQuietBlog - 静谧风格个人博客模板
- @Author: xuzhiwen
- @Copyright: layui.com
- 
- */
-
-
-layui.define(['element', 'carousel', 'laypage','form','laytpl'], function(exports){
+﻿layui.define(['element', 'carousel', 'laypage','form','laytpl'], function(exports){
   var $ = layui.jquery
   ,laytpl = layui.laytpl
   ,element = layui.element
