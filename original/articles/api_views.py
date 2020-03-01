@@ -18,7 +18,7 @@ class ArticleListAPIView(generics.ListAPIView):
         if category:
             queryset = queryset.filter(category_id=category).select_related('category')
         if tag:
-            queryset = queryset.filter(article2tag__tag=tag).select_related('article2tag')
+            queryset = queryset.filter(article2tag__tag_id=tag)
 
         return queryset
 
