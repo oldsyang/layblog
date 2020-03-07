@@ -4,7 +4,7 @@
 {% block content %}
     <!-- 右侧内容区域 -->
     <div class="article-right-content layui-anim layui-anim-upbit">
-        <h3>推荐文章</h3>
+        <h3>标签</h3>
         <ul>
             {% for id, title in tag_list.items %}
                 <li>
@@ -143,7 +143,7 @@
             <img src="<% d.cover %>" alt="" style="max-width: 100%;height: auto;max-height: 170px;">
             <div class="item-content">
                 <h3><% d.title %></h3>
-                <span class="Subtitle"><% d.category %></span><br/>
+                <span class="Subtitle" style="display: none"><% d.category %></span><br/>
                 <p><% d.summary %></p>
                 <a target="_self" href="/articles/<% d.acode %>/">
                     <button class="layui-btn">阅读全文</button>

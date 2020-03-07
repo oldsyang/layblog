@@ -65,7 +65,7 @@ color: #d1aa56;
 
 
 /*主要内容*/
-.main{width: 62.5%; height: 100%; padding-top: 178px; margin-left:21%;}
+.main{width: 62.5%; height: 100%; padding-top: 120px; margin-left:4%;}
 .main .item{padding:16px 50px;background: #fff; background: #141412;  background:rgba(255,255,255,0.2);  filter:Alpha(opacity=200); margin-bottom: 40px;}
 .main .item img{float: left; padding-right: 39px;}
 .main .item-content{color: #ffffff; font-size: 14px;}
@@ -161,10 +161,10 @@ color: #d1aa56;
 .mood .item-content p.time i{margin-right:5px;}
 .mood .item-content p.time span{margin-right: 20px;}
 .mood.mood-details .top_title{color: #9f9f9d; height: 58px; line-height: 58px; border-bottom:1px solid #666666; background: #141412;  background:rgba(255,255,255,0.2); filter:Alpha(opacity=200); padding-left: 50px;}
-.mood .item1 img{width: 100%;} 
+.mood .item1 img{width: 100%;}
 
 
-.article1{width: 62.5%; margin-left:21%;}
+.article1{width: 80%; margin-left:10%;}
 .main.article1 .top_title{padding-left: 40px;}
 .article1 .item1{padding: 16px 40px;}
 .article1 .item .layui-card .layui-card-header,.article1 .item .layui-card .layui-card-body{padding: 40px 40px 27px 40px;}
