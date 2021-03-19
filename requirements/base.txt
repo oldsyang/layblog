@@ -1,5 +1,5 @@
 django_validator==0.3.0
-django==2.2.10
+django==2.2.18
 ipython
 djangorestframework==3.9.4
 arrow==0.13.2
