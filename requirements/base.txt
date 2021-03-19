@@ -1,7 +1,7 @@
 django_validator==0.3.0
 django==2.2.10
 ipython
-djangorestframework==3.9.4
+djangorestframework==3.11.2
 arrow==0.13.2
 jsonfield==2.0.2
 django-ipware==2.1.0
